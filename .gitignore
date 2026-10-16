@@ -1,0 +1,11 @@
+db/
+incremental_db/
+output_files/
+simulation/
+greybox_tmp/
+*.qws
+*.bak
+*.orig
+*.flock
+rtl/db/
+rtl/incremental_db/
