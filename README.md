@@ -36,3 +36,7 @@ STOP_BIT: 16 tick boyunca hattın kural gereği lojik '1' seviyesinde kalıp kal
 
 Simülasyon Dalga Formu
 uart_rx_pho.png
+
+Modül 4: Top-Level Entegrasyonu ve Echo Loopback
+Genel Bakış: uart_baud_gen, uart_rx ve uart_tx modüllerini tek çatı altında toplayan yapısal üst düzey modüldür.
+Echo Mekanizması:** Alıcının çıkardığı rx_done sinyali doğrudan vericinin tx_start girişine, rx_data veri hattı ise vericinin tx_data girişine bağlanmıştır. Bu sayede harici bir işlemciye gerek kalmadan gelen bayt anında bilgisayara geri basılarak sistem donanım üzerinde test edilebilir.
