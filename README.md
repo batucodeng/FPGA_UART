@@ -39,4 +39,14 @@ uart_rx_pho.png
 
 Modül 4: Top-Level Entegrasyonu ve Echo Loopback
 Genel Bakış: uart_baud_gen, uart_rx ve uart_tx modüllerini tek çatı altında toplayan yapısal üst düzey modüldür.
-Echo Mekanizması:** Alıcının çıkardığı rx_done sinyali doğrudan vericinin tx_start girişine, rx_data veri hattı ise vericinin tx_data girişine bağlanmıştır. Bu sayede harici bir işlemciye gerek kalmadan gelen bayt anında bilgisayara geri basılarak sistem donanım üzerinde test edilebilir.
+Echo Mekanizması: Alıcının çıkardığı rx_done sinyali doğrudan vericinin tx_start girişine, rx_data veri hattı ise vericinin tx_data girişine bağlanmıştır. Bu sayede harici bir işlemciye gerek kalmadan gelen bayt anında bilgisayara geri basılarak sistem donanım üzerinde test edilebilir.
+
+Modül 5: Komut Çözücü (Command Parser & LED Kontrolcüsü)
+Genel Bakış: UART alıcı modülünden paralel olarak aktarılan 8-bitlik ASCII karakterlerini çözümleyen ve gelen komut koduna göre doğrudan donanımsal çevre birimini (LED) süren kontrol bloğudur.
+
+Mimari ve Çalışma Mantığı
+Karakter Tabanlı Ayrıştırma: Alıcıdan yeni_paket_geldi darbesi üretildiği anda hatta bulunan gelen_veri baytı denetlenir:
+ASCII '1' (0x31): led_cikisi hattı lojik '1' seviyesine çekilir (LED yanar).
+ASCII '0' (0x30): led_cikisi hattı lojik '0' seviyesine çekilir (LED söner).
+Durum Koruma ve Gürültü Filtreleme: Sistemde tanımlanmamış herhangi bir ASCII karakteri (örneğin 'A' / 0x41) geldiğinde LED'in mevcut lojik seviyesi korunur, geçersiz komutlar yok sayılır.
+Kalıcı Durum Saklama: led_durumu dahili saklayıcısı (register), yeni geçerli bir komut gelene veya donanımsal reset uygulanana kadar son durumu hat üzerinde sabit tutar.
