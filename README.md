@@ -50,3 +50,8 @@ ASCII '1' (0x31): led_cikisi hattı lojik '1' seviyesine çekilir (LED yanar).
 ASCII '0' (0x30): led_cikisi hattı lojik '0' seviyesine çekilir (LED söner).
 Durum Koruma ve Gürültü Filtreleme: Sistemde tanımlanmamış herhangi bir ASCII karakteri (örneğin 'A' / 0x41) geldiğinde LED'in mevcut lojik seviyesi korunur, geçersiz komutlar yok sayılır.
 Kalıcı Durum Saklama: led_durumu dahili saklayıcısı (register), yeni geçerli bir komut gelene veya donanımsal reset uygulanana kadar son durumu hat üzerinde sabit tutar.
+
+Modül 5'i güncelledim:
+Tek Saat Çevrimi Tetikleme (One-Clock Pulse): Alıcının ürettiği yeni_paket_geldi bayrağı yalnızca tek bir sistem saati periyodu boyunca aktif kalır; karşılaştırma mantığı sadece bu darbe anında işletilerek gereksiz register yazımları önlenir.
+
+Senkron Kayıt ve Sıfırlama (Synchronous Registering): Durum saklama işlemi 50 MHz sistem saatinin yükselen kenarına (rising_edge(clk)) senkron olarak gerçekleşir. Asenkron rst sinyali geldiğinde led_cikisi anında güvenli lojik '0' seviyesine çekilir.
